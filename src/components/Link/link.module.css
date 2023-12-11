@@ -1,0 +1,9 @@
+.linkWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.img {
+  width: 24px;
+}
