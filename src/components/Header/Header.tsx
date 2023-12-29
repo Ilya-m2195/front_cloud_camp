@@ -3,13 +3,18 @@ import styles from './header.module.css';
 import { AvatarCustom } from '../AvatarCustom/AvatarCustom';
 import { Link } from '../Link/Link';
 
-export const Header: FC = () => {
+type Props = {
+  name?: string;
+  surname?: string;
+};
+
+export const Header: FC<Props> = ({ name, surname }) => {
   return (
     <header>
       <div className={styles.header}>
-        <AvatarCustom />
+        <AvatarCustom name={name} surname={surname} />
         <div>
-          <h2>Иван Иванов</h2>
+          <h2>{name && surname ? `${name} ${surname}` : 'Иван Иванов'}</h2>
           <div className={styles.linkBlock}>
             <Link nameResource={'Telegram'} />
             <Link nameResource={'GitHub'} />

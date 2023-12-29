@@ -4,6 +4,10 @@
   gap: 4px;
 }
 
+.linkWrapper:not(:last-child) {
+  margin-right: 16px;
+}
+
 .img {
   width: 24px;
 }

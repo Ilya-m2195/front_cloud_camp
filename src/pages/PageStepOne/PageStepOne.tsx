@@ -1,45 +1,18 @@
-import { Box, Button, Checkbox, Container, Group, Progress, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form/lib/use-form';
+import { Box, NativeSelect, TextInput } from '@mantine/core';
+import { FC } from 'react';
+import { FormProps } from '../../App/types/types';
 
-const containerProps = {
-  maw: '900px',
-  p: '110px 62px'
-};
-
-export const PageStepOne = () => {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      termsOfService: false
-    },
-
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email')
-    }
-  });
+export const PageStepOne: FC<FormProps> = ({ form }) => {
   return (
-    <Container {...containerProps}>
-      <Progress value={50} />
-      <Box maw={340} mx='auto'>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
-          <TextInput
-            withAsterisk
-            label='Email'
-            placeholder='your@email.com'
-            {...form.getInputProps('email')}
-          />
-
-          <Checkbox
-            mt='md'
-            label='I agree to sell my privacy'
-            {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-          />
-
-          <Group justify='flex-end' mt='md'>
-            <Button type='submit'>Submit</Button>
-          </Group>
-        </form>
-      </Box>
-    </Container>
+    <Box maw={340} m={0}>
+      <TextInput
+        label='Nickname'
+        placeholder='Enter nickname'
+        {...form.getInputProps('nickname')}
+      />
+      <TextInput label='Name' placeholder='Enter name' {...form.getInputProps('name')} />
+      <TextInput label='Surname' placeholder='Enter surname' {...form.getInputProps('surname')} />
+      <NativeSelect label='Sex' data={['man', 'woman']} {...form.getInputProps('sex')} />
+    </Box>
   );
 };
