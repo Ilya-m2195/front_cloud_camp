@@ -6,10 +6,12 @@ import { useState } from 'react';
 import { IUserForm } from '../../App/types/types';
 import { postUser } from '../../App/store/userSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { validateHelper } from '../../helpers/validateHelper';
 
 export const StartingPage = () => {
   const [isStartFilling, setIsStartFilling] = useState(false);
   const dispatch = useAppDispatch();
+  const onSubmitHandler = (values: IUserForm) => dispatch(postUser(values));
 
   const form = useForm<IUserForm>({
     initialValues: {
@@ -29,28 +31,12 @@ export const StartingPage = () => {
       checkbox: [],
       about: ''
     },
-    validate: {
-      phone: (value) =>
-        /(\+7|8)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g.test(
-          value
-        )
-          ? null
-          : 'Invalid phone',
-      email: (value) =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(value) ? null : 'Invalid email',
-      name: (value) => (value.length > 50 ? 'Name must contain no more than 50 letters' : null),
-      surname: (value) => (value.length > 50 ? 'Name must contain no more than 50 letters' : null),
-      nickname: (value) => (value.length > 30 ? 'Name must contain no more than 30 letters' : null),
-      about: (value) =>
-        value.split(' ').join('').length > 200
-          ? 'about must contain no more than 200 letters'
-          : null
-    }
+    validate: validateHelper()
   });
   return (
     <div>
       <Header name={form.values.name} surname={form.values.surname} />
-      <form onSubmit={form.onSubmit((values: IUserForm) => dispatch(postUser(values)))}>
+      <form onSubmit={form.onSubmit(onSubmitHandler)}>
         {!isStartFilling ? (
           <StartingForm setIsStartFilling={setIsStartFilling} form={form} />
         ) : (

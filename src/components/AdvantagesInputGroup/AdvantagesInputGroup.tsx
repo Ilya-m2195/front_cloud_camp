@@ -5,15 +5,15 @@ import { FC } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 export const AdvantagesInputGroup: FC<FormProps> = ({ form }) => {
+  const removeItemHandler = (index: number) => form.removeListItem('advantages', index);
   const fields = form.values.advantages.map((item, index) => (
     <Group key={item.key} mt='xs'>
       <TextInput
         placeholder='Enter your advantage'
         withAsterisk
-        style={{ flex: 1 }}
         {...form.getInputProps(`advantages.${index}.advantage`)}
       />
-      <ActionIcon color='red' onClick={() => form.removeListItem('advantages', index)}>
+      <ActionIcon color='red' onClick={() => removeItemHandler(index)}>
         <FaTrash size='1rem' />
       </ActionIcon>
     </Group>

@@ -8,13 +8,15 @@ type Props = {
   surname?: string;
 };
 
+const DEFAULT_FULL_NAME = 'Иван Иванов';
+
 export const Header: FC<Props> = ({ name, surname }) => {
   return (
     <header>
       <div className={styles.header}>
         <AvatarCustom name={name} surname={surname} />
         <div>
-          <h2>{name && surname ? `${name} ${surname}` : 'Иван Иванов'}</h2>
+          <h2>{name && surname ? `${name} ${surname}` : DEFAULT_FULL_NAME}</h2>
           <div className={styles.linkBlock}>
             <Link nameResource={'Telegram'} />
             <Link nameResource={'GitHub'} />

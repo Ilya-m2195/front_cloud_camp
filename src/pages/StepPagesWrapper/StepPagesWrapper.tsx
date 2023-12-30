@@ -5,13 +5,27 @@ import { PageStepTwo } from '../PageStepTwo/PageStepTwo';
 import { PageStepThree } from '../PageStepThree/PageStepThree';
 import { TypeForm } from '../../App/types/types';
 import { RootState } from '../../App/store/store';
-import { useSelector } from 'react-redux';
 import { ModalWindow } from '../../components/Modal/ModalWindow';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const containerProps = {
   maw: '900px',
   p: '110px 62px'
 };
+enum buttonValue {
+  next = 'Далее',
+  submit = 'Отправить'
+}
+
+enum buttonType {
+  button = 'button',
+  submit = 'submit'
+}
+
+enum pageRange {
+  maxPage = 3,
+  null = 0
+}
 
 type Props = {
   form: TypeForm;
@@ -19,11 +33,12 @@ type Props = {
 };
 
 export const StepPagesWrapper: FC<Props> = ({ form, setIsStartFilling }) => {
-  const value = useSelector((state: RootState) => state.userSlice.loading);
+  const value = useAppSelector((state: RootState) => state.userSlice.loading);
   const [active, setActive] = useState(0);
   const returnStartPage = () => setIsStartFilling(false);
-  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+  const nextStep = () =>
+    setActive((current) => (current < pageRange.maxPage ? current + 1 : current));
+  const prevStep = () => setActive((current) => (current > pageRange.null ? current - 1 : current));
 
   const returnStep = (value: number): ReactNode => {
     switch (value) {
@@ -51,8 +66,8 @@ export const StepPagesWrapper: FC<Props> = ({ form, setIsStartFilling }) => {
         <Button variant='outline' onClick={active ? prevStep : returnStartPage}>
           Назад
         </Button>
-        <Button type={active <= 2 ? 'button' : 'submit'} onClick={nextStep}>
-          {active < 2 ? 'Далее' : 'Отправить'}
+        <Button type={active <= 2 ? buttonType.button : buttonType.submit} onClick={nextStep}>
+          {active < 2 ? buttonValue.next : buttonValue.submit}
         </Button>
       </Group>
     </Container>

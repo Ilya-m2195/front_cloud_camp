@@ -1,20 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IUserForm, IUserInitialState } from '../types/types';
+import { fetchPostData } from '../api/api';
 
 const initialState: IUserInitialState = {
   loading: null
 };
+
+enum requestStatus {
+  pending = 'pending',
+  succeeded = 'succeeded',
+  failed = 'failed'
+}
 
 const URL = 'https://api.sbercloud.ru/content/v1/bootcamp/frontend';
 
 export const postUser = createAsyncThunk<Promise<void>, IUserForm>(
   'userSlice/postUser',
   async (userInfo) => {
-    await fetch(URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userInfo)
-    });
+    fetchPostData(URL, userInfo);
   }
 );
 
@@ -24,13 +27,13 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(postUser.pending, (state) => {
-      state.loading = 'pending';
+      state.loading = requestStatus.pending;
     });
     builder.addCase(postUser.fulfilled, (state) => {
-      state.loading = 'succeeded';
+      state.loading = requestStatus.succeeded;
     });
     builder.addCase(postUser.rejected, (state) => {
-      state.loading = 'failed';
+      state.loading = requestStatus.failed;
     });
   }
 });

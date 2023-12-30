@@ -3,6 +3,8 @@ import { ModalError } from './ModalError/ModalError';
 import { ModalSuccess } from './ModalSuccess/ModalSuccess';
 import { FC, useState } from 'react';
 
+const FAILED = 'failed';
+
 type Props = {
   value: string;
   returnStartPage: () => void;
@@ -15,7 +17,7 @@ export const ModalWindow: FC<Props> = ({ value, returnStartPage }) => {
   return (
     <>
       <Modal opened={isClose} centered onClose={onClose}>
-        {value === 'failed' ? (
+        {value === FAILED ? (
           <ModalError onClose={onClose} />
         ) : (
           <ModalSuccess returnStartPage={returnStartPage} />

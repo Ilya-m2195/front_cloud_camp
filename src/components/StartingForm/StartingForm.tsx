@@ -9,6 +9,12 @@ type Props = {
 };
 
 export const StartingForm: FC<Props> = ({ form, setIsStartFilling }) => {
+  const isFieldsFilledHandler = () => {
+    if (form.validateField('phone').hasError || form.validateField('email').hasError) {
+      return;
+    }
+    setIsStartFilling(true);
+  };
   const inputRef = useMask({ mask: '+7 (___) ___-__-__', replacement: { _: /\d/ } });
   return (
     <Box maw={340}>
@@ -28,15 +34,7 @@ export const StartingForm: FC<Props> = ({ form, setIsStartFilling }) => {
         {...form.getInputProps('email')}
       />
       <Group justify='flex-start'>
-        <Button
-          type='button'
-          onClick={() => {
-            if (form.validateField('phone').hasError || form.validateField('email').hasError) {
-              return;
-            }
-            setIsStartFilling(true);
-          }}
-        >
+        <Button type='button' onClick={isFieldsFilledHandler}>
           Начать
         </Button>
       </Group>
