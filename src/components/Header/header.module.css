@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.linkBlock {
+  display: flex;
+}
+
+.hr {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.08);
+  height: 2px;
+  width: 100%;
+  margin-bottom: 24px;
+}
